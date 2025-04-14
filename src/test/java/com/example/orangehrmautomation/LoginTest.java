@@ -33,7 +33,7 @@ public class LoginTest {
 
     @Test
     public void testLogin(){
-        loginPage.login("Admin", "admin123");
+        loginPage.login("username", "password");
         String title = driver.getTitle();
         Assertions.assertTrue(dashboardPage.isLogoutButtonVisible(), "Login failed - Dashboard not visible");
     }
