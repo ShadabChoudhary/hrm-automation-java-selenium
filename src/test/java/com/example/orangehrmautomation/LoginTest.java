@@ -47,6 +47,7 @@ public class LoginTest {
 
     @Test
     public void testAddMultipleEmployees() {
+//        loginPage.login("Admin", "admin123");
         pimPage.navigateToPIMPage();
         pimPage.clickAddEmployee();
         String[][] employeeData = {
