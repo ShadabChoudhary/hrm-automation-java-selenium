@@ -10,6 +10,7 @@ import java.time.Duration;
 
 
 public class LoginPage {
+    private  WebDriverWait wait;
     private WebDriver driver;
 
     private By userNameField = By.name("username");
@@ -18,19 +19,9 @@ public class LoginPage {
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));;
     }
 
-//    public void enterUserName(String userName) {
-//        driver.findElement(userNameField).sendKeys(userName);
-//    }
-//
-//    public void enterPassword(String password) {
-//        driver.findElement(passwordField).sendKeys(password);
-//    }
-//
-//    public void clickLoginButton() {
-//        driver.findElement(loginButton).click();
-//    }
 
     public void login(String username, String password){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -44,7 +35,7 @@ public class LoginPage {
         WebElement loginButton = driver.findElement(By.tagName("button")); // or use proper locator
         loginButton.click();
         //waiting for the dashboard to be visible after login
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h6[text()='Dashboard']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h6[text()='Dashboard']")));
     }
 
     public boolean isLoginButtonVisible() {

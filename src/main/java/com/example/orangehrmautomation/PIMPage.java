@@ -10,12 +10,15 @@ import java.time.Duration;
 
 public class PIMPage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     private By pimMenu = By.xpath("//span[text()='PIM']");
-    private By addEmployeeButton = By.xpath("//ul//li//a[.='Add Employee']");
+    private By employeeListButton = By.xpath("//a[normalize-space()='Employee List']");
+    private By addEmployeeButton = By.xpath("//a[normalize-space()='Add Employee']");
 
     public PIMPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public void navigateToPIMPage() {
@@ -33,9 +36,14 @@ public class PIMPage {
         return new AddEmployeePage(driver);
     }
 
+    public void clickEmployeeList() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement listBtn = wait.until(ExpectedConditions.elementToBeClickable(employeeListButton));
+        listBtn.click();
+    }
+
     public boolean isPIMPageVisible() {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             WebElement pimPage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("pimPageId")));
             return pimPage.isDisplayed();
         } catch (Exception e) {

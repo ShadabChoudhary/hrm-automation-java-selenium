@@ -18,6 +18,7 @@ public class LoginTest {
     public static void setUpAll(){
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
     }
@@ -33,7 +34,7 @@ public class LoginTest {
 
     @Test
     public void testLogin(){
-        loginPage.login("username", "password");
+        loginPage.login("Admin", "admin123");
         String title = driver.getTitle();
         Assertions.assertTrue(dashboardPage.isLogoutButtonVisible(), "Login failed - Dashboard not visible");
     }
@@ -46,6 +47,8 @@ public class LoginTest {
 
     @Test
     public void testAddMultipleEmployees() {
+        pimPage.navigateToPIMPage();
+        pimPage.clickAddEmployee();
         String[][] employeeData = {
                 {"Shadab", "Choudhary", "01095"},
                 {"Shadab", "Khan", "01096"},
@@ -60,20 +63,26 @@ public class LoginTest {
             String empId = employee[2];
 
             // Click the Add Employee link and wait for the page to load
-            AddEmployeePage addEmployeePage = pimPage.clickAddEmployee();
             Assertions.assertTrue(addEmployeePage.isSaveButtonVisible(), "Add Employee page is not visible");
 
             // Add employee details
             addEmployeePage.addEmployee(firstName, lastName, empId);
+
+            pimPage.clickAddEmployee();
         }
+
+        pimPage.clickEmployeeList();
     }
 
 
     @Test
     public void testEmployeeListPage(){
-        employeeListPage.searchEmployeeByName("Shadab Choudhary");
-        Assertions.assertTrue(employeeListPage.isEmployeePresent("Shadab Choudhary"),
+        pimPage.clickEmployeeList();
+        employeeListPage.searchEmployeeByName("Shadab");
+        Assertions.assertTrue(employeeListPage.isEmployeePresent("Shadab"),
                                                             "Employee not found int the List");
+
+        dashboardPage.logout();
     }
 
     @Test
